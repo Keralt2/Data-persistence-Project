@@ -13,6 +13,8 @@ public class MenuUI : MonoBehaviour
     public InputField InputName;
     public string UserName;
     public static MenuUI Instance;
+    public int BestScore;
+    public string BestScoreName;
 
     private void Awake()
     {
@@ -52,17 +54,18 @@ public class MenuUI : MonoBehaviour
         public string BestScoreName;
     }
 
-    public void SaveValue() // сохранение данных в файл
+    public void SaveValue() 
     {
-        SaveData data = new SaveData(); // Создание экземпляра класса
-        data.BestScore = 1; // заполнение значения экземпляра значением из MainManager
+        SaveData data = new SaveData(); 
+        data.BestScore = BestScore;
+        data.BestScoreName = BestScoreName;
 
         string json = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
 
-    public void LoadValue() // загрузка данных из файла
+    public void LoadValue()
     {
 
         string path = Application.persistentDataPath + "/savefile.json";
@@ -71,7 +74,8 @@ public class MenuUI : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-           // value = data.value;
+            BestScore = data.BestScore;
+            BestScoreName = data.BestScoreName;
         }
     }
 }
