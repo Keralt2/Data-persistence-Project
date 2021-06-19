@@ -38,6 +38,7 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+        BestScoreText.text = $"Best Score : {MenuUI.Instance.UserName} : {m_BestPoints}";
     }
 
     private void Update()
@@ -70,7 +71,7 @@ public class MainManager : MonoBehaviour
         if (m_BestPoints < m_Points)
         {
             m_BestPoints = m_Points;
-            BestScoreText.text = $"Best Score : {MenuUI.Instance.InputName.text} : {m_BestPoints}";
+            BestScoreText.text = $"Best Score : {MenuUI.Instance.UserName} : {m_BestPoints}";
         }
         ScoreText.text = $"Score : {m_Points}";
     }

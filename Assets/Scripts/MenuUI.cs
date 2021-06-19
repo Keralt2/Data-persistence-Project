@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;         // # команды дл€ редактора
@@ -10,6 +11,7 @@ using UnityEditor;         // # команды дл€ редактора
 public class MenuUI : MonoBehaviour
 {
     public InputField InputName;
+    public string UserName;
     public static MenuUI Instance;
 
     private void Awake()
@@ -21,6 +23,12 @@ public class MenuUI : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
+    }
+
+    public void OnInputChange()
+    {
+        UserName = InputName.text;
     }
 
     public void SceneChanger()
@@ -36,5 +44,34 @@ public class MenuUI : MonoBehaviour
         Application.Quit(); // original code to quit Unity player
 #endif
 
+    }
+    [System.Serializable]
+    class SaveData
+    {
+        public int BestScore;
+        public string BestScoreName;
+    }
+
+    public void SaveValue() // сохранение данных в файл
+    {
+        SaveData data = new SaveData(); // —оздание экземпл€ра класса
+        data.BestScore = 1; // заполнение значени€ экземпл€ра значением из MainManager
+
+        string json = JsonUtility.ToJson(data);
+
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+    }
+
+    public void LoadValue() // загрузка данных из файла
+    {
+
+        string path = Application.persistentDataPath + "/savefile.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+           // value = data.value;
+        }
     }
 }
