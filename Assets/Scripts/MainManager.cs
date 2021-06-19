@@ -39,7 +39,9 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
-        BestScoreText.text = $"Best Score : {BestScoreName} : {m_BestPoints}";
+        MenuUI.Instance.LoadValue();
+        m_BestPoints = MenuUI.Instance.BestScore;
+        BestScoreText.text = $"Best Score : {MenuUI.Instance.BestScoreName} : {MenuUI.Instance.BestScore}";
     }
 
     private void Update()
@@ -85,6 +87,7 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        MenuUI.Instance.SaveValue();
 
     }
 

@@ -78,4 +78,13 @@ public class MenuUI : MonoBehaviour
             BestScoreName = data.BestScoreName;
         }
     }
+
+    public void ResetScore()
+    {
+        SaveData data = new SaveData();
+        data.BestScore = 0;
+        data.BestScoreName = "New";
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+    }
 }
