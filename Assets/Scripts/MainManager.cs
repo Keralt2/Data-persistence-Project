@@ -11,10 +11,12 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text BestScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
     private int m_Points;
+    private int m_BestPoints;
     
     private bool m_GameOver = false;
 
@@ -65,6 +67,11 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
+        if (m_BestPoints < m_Points)
+        {
+            m_BestPoints = m_Points;
+            BestScoreText.text = $"Best Score : {MenuUI.Instance.InputName.text} : {m_BestPoints}";
+        }
         ScoreText.text = $"Score : {m_Points}";
     }
 
